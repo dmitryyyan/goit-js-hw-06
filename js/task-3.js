@@ -1,14 +1,35 @@
-const nameInput = document.getElementById('name-input');
-    const nameOutput = document.getElementById('name-output');
+class StringBuilder {
+  #value;
+  constructor(initialValue) {
+    this.#value = initialValue;
+  }
+  getValue() {
+    return this.#value;
+  }
 
-    nameInput.addEventListener('input', updateName);
+  padEnd(str) {
+    let b = this.#value.split("");
+    b.push(str);
+    this.#value = b.join("");
+  }
 
-    function updateName() {
-      const enteredName = nameInput.value.trim();
+  padStart(str) {
+    let a = this.#value.split("");
+    a.unshift(str);
+    this.#value = a.join("");
+  }
 
-      if (enteredName === '') {
-        nameOutput.textContent = 'Anonymous';
-      } else {
-        nameOutput.textContent = enteredName;
-      }
-    }
+  padBoth(str) {
+    this.padStart(str);
+    this.padEnd(str);
+  }
+}
+
+const builder = new StringBuilder(".");
+console.log(builder.getValue()); // "."
+builder.padStart("^");
+console.log(builder.getValue()); // "^."
+builder.padEnd("^");
+console.log(builder.getValue()); // "^.^"
+builder.padBoth("=");
+console.log(builder.getValue()); // "=^.^="
